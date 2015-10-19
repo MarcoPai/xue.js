@@ -1,8 +1,14 @@
 {
   "name": "xuejs",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "学而思网校前端项目构建工具",
-  "main": "index.js",
+  "main": "./index.js",
+  "bin": {
+    "xue":"./source/bin/xue.js"
+  },
+  "dependencies": {
+    "commander": "2.9.0"
+  },
   "scripts": {
     "test": "xtest"
   },
@@ -11,19 +17,13 @@
     "url": "git+https://github.com/MarcoPai/xue.js.git"
   },
   "keywords": [
-    "Easy",
-    "Web",
-    "Component",
-    "js",
+    "xuejs",
     "xue"
   ],
   "author": "Marco.Pai",
-  "license": "GPL",
+  "license": "BSD",
   "bugs": {
     "url": "https://github.com/MarcoPai/xue.js/issues"
   },
-  "homepage": "https://github.com/MarcoPai/xue.js#readme",
-  "dependencies": {
-    "fis3": "3.x.x"
-  }
+  "homepage": "https://github.com/MarcoPai/xue.js#readme"
 }
