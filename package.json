@@ -1,6 +1,6 @@
 {
   "name": "xuejs",
-  "version": "0.1.4",
+  "version": "0.0.1",
   "description": "学而思网校前端项目构建工具",
   "main": "./index.js",
   "bin": {
