@@ -22,12 +22,19 @@
 // };
 // //获取除第一个命令以后的参数，使用空格拆分
 // run(process.argv.slice(2)); 
-
+var util = require('../lib/util.js');
+var path = require('path');
+/**
+ * package.json 中的信息
+ * @memberOf fis.cli
+ * @name info
+ */
+var info = util.readJSON(path.dirname(__dirname) + '/../package.json');
 var program = require('commander');
 
 //定义参数,以及参数内容的描述  
 program  
-    .version('0.0.1')
+    .version(info.version)
     .usage('[options] [value ...]')
     .option('-m, --message <string>', 'a string argument')
     .option('-i, --integer <n>', 'input a integet argument.', parseInt) 
@@ -37,6 +44,7 @@ program
   .option('-C, --chdir <path>', 'change the working directory')
   .option('-c, --config <path>', 'set config path. defaults to ./deploy.conf')
   .option('-T, --no-tests', 'ignore test hook')
+  .option('-v, --version', 'ver', 'ver')
 
 program
   .command('add')
@@ -58,7 +66,31 @@ program
   .action(function() {
     console.log('setup');
   });
-
+program
+  .command('v')
+  .description('查看版本号')
+  .option("-e, --exec_mode <mode>", "Which exec mode to use")
+  .action(function(){
+    // var content = ['',
+    //   '  v' + info.version,
+    //   ''
+    // ].join('\n');
+    logo = [
+    '********************************',
+    '**  __    __  _   _   _____   **',
+    '**  \\ \\  / / | | | | | ____|  **',
+    '**  \\ \\/ /  | | | | | |__     **',
+    '**    }  {   | | | | |  __|   **',
+    '**   / /\\ \\  | |_| | | |___   **',
+    '**  /_/  \\_\\ \\_____/ |_____|  **',
+    '**                            **',
+    '**           v'+ info.version +'           **',
+    '********************************',
+    ''
+    ].join('\n');
+    console.log(logo);
+    
+  });
 // program
 //   .command('exec <cmd>')
 //   .description('run the given remote command')
@@ -66,24 +98,24 @@ program
 //     console.log('exec "%s"', cmd);
 //   });
 
-program
-  .command('teardown <dir> [otherDirs...]')
-  .description('run teardown commands')
-  .action(function(dir, otherDirs) {
-    console.log('dir "%s"', dir);
-    if (otherDirs) {
-      otherDirs.forEach(function (oDir) {
-        console.log('dir "%s"', oDir);
-      });
-    }
-  });
+// program
+//   .command('teardown <dir> [otherDirs...]')
+//   .description('run teardown commands')
+//   .action(function(dir, otherDirs) {
+//     console.log('dir "%s"', dir);
+//     if (otherDirs) {
+//       otherDirs.forEach(function (oDir) {
+//         console.log('dir "%s"', oDir);
+//       });
+//     }
+//   });
 
-program
-  .command('*')
-  .description('deploy the given env')
-  .action(function(env) {
-    console.log('deploying "%s"', env);
-  });
+// program
+//   .command('*')
+//   .description('deploy the given env')
+//   .action(function(env) {
+//     console.log('deploying "%s"', env);
+//   });
 
 // program.parse(process.argv);
 
@@ -119,14 +151,14 @@ program.on('help', function() {
 program.parse(process.argv)  
   
 //输出结果  
-console.info('--messsage:')  
-console.log(program.message);  
+// console.info('--messsage:')  
+// console.log(program.message);  
   
-console.info('--integer:')  
-console.log(program.integer)  
+// console.info('--integer:')  
+// console.log(program.integer)  
   
-console.info('--range:')  
-console.log(program.range)  
+// console.info('--range:')  
+// console.log(program.range)  
   
-console.info('--list:')  
-console.log(program.list)  
+// console.info('--list:')  
+// console.log(program.list)  
