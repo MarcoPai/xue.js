@@ -11,7 +11,7 @@ var IS_WIN = process.platform.indexOf('win') === 0;
  * @memberOf fis.cli
  * @name info
  */
-cli.info = util.readJSON(path.dirname(__dirname) + '/../package.json');
+var info = util.readJSON(path.dirname(__dirname) + '/../package.json');
 
 /**
  * 命令行工具名字
@@ -21,11 +21,12 @@ cli.info = util.readJSON(path.dirname(__dirname) + '/../package.json');
  */
 cli.name = 'xue';
 
-cli.commander = require('commander');
+cli.commander = null;
+var program = require('commander');
 
 //定义参数,以及参数内容的描述  
-cli.commander  
-    .version(cli.info.version)
+program  
+    .version(info.version)
     .usage('[options] [value ...]')
     .option('-m, --message <string>', 'a string argument')
     .option('-i, --integer <n>', 'input a integet argument.', parseInt) 
@@ -37,27 +38,27 @@ cli.commander
   .option('-T, --no-tests', 'ignore test hook')
   .option('-v, --v', 'ver', 'ver')
 
-cli.commander
+program
   .command('add')
   .description('添加模块')
   .action(function(){
     console.log('已添加');
   });
 
-cli.commander
+program
   .command('init')
   .description('初始化项目')
   .action(function(){
     console.log('.......已完成');
   });
 
-cli.commander
+program
   .command('setup')
   .description('run remote setup commands')
   .action(function() {
     console.log('setup');
   });
-cli.commander
+program
   .command('v')
   .description('查看版本号')
   .option("-e, --exec_mode <mode>", "Which exec mode to use")
@@ -72,13 +73,42 @@ cli.commander
     '**   / /\\ \\  | |_| | | |___   **',
     '**  /_/  \\_\\ \\_____/ |_____|  **',
     '**                            **',
-    '**           v'+ cli.info.version +'           **',
+    '**           v'+ info.version +'           **',
     '********************************',
     ''
     ].join('\n');
     console.log(logo);
     
   });
+// program
+//   .command('exec <cmd>')
+//   .description('run the given remote command')
+//   .action(function(cmd) {
+//     console.log('exec "%s"', cmd);
+//   });
+
+// program
+//   .command('teardown <dir> [otherDirs...]')
+//   .description('run teardown commands')
+//   .action(function(dir, otherDirs) {
+//     console.log('dir "%s"', dir);
+//     if (otherDirs) {
+//       otherDirs.forEach(function (oDir) {
+//         console.log('dir "%s"', oDir);
+//       });
+//     }
+//   });
+
+// program
+//   .command('*')
+//   .description('deploy the given env')
+//   .action(function(env) {
+//     console.log('deploying "%s"', env);
+//   });
+
+// program.parse(process.argv);
+
+
 
 function range (val) {  
     return val.split('..').map(Number);  
@@ -90,7 +120,7 @@ function list (val) {
   
   
 //添加额外的文档描述  
-cli.commander.on('help', function() {  
+program.on('help', function() {  
     console.log('   Examples:')  
     console.log('')  
     console.log('       # input string, integer and float')  
@@ -107,5 +137,18 @@ cli.commander.on('help', function() {
 });  
   
 //解析commandline arguments  
-cli.commander.parse(process.argv)  
+program.parse(process.argv)  
   
+//输出结果  
+// console.info('--messsage:')  
+// console.log(program.message);  
+  
+// console.info('--integer:')  
+// console.log(program.integer)  
+  
+// console.info('--range:')  
+// console.log(program.range)  
+  
+// console.info('--list:')  
+// console.log(program.list)  
+//commander object
